@@ -13,25 +13,25 @@ sub main
 {
     # Lチカに利用するPIN番号が引数に指定されていない
     if (@ARGV == 0) {
-        print "invalid argument. please assign pin.(ex. 18)";
+        print "invalid argument. please assign gpio num.(ex. 18)";
         return 1;
     }
 
-    my $pin = $ARGV[0];
+    my $gpio = $ARGV[0];
 
     # PIN設定
-    exec_cmd("echo $pin > /sys/class/gpio/export");
-    exec_cmd("echo out > /sys/class/gpio/gpio$pin/direction");
+    exec_cmd("echo $gpio > /sys/class/gpio/export");
+    exec_cmd("echo out > /sys/class/gpio/gpio$gpio/direction");
 
     # Lチカ
     my $LIMIT = 10;
     for (my $count = 0; $count < $LIMIT; $count++){
         print ">>>> [count = $count]\n";
         # 点灯
-        turn_on_LED($pin);
+        turn_on_LED($gpio);
         sleep(getRandomeTime());
         # 消灯
-        turn_off_LED($pin);
+        turn_off_LED($gpio);
         sleep(getRandomeTime());
     }
 
@@ -53,8 +53,8 @@ sub turn_on_LED  { ctrl_LED(1, shift); }
 sub turn_off_LED { ctrl_LED(0, shift); }
 sub ctrl_LED
 {
-    my ($val, $pin) = @_;
-    exec_cmd("echo $val > /sys/class/gpio/gpio$pin/value");
+    my ($val, $gpio) = @_;
+    exec_cmd("echo $val > /sys/class/gpio/gpio$gpio/value");
 }
 
 #
