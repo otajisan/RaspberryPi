@@ -10,7 +10,7 @@
 #include <wiringPi.h>
 #include <softTone.h>
 
-#define PIN 1
+#define PIN 1 // GPIO 18
 #define TEMPO 1500
 
 /**
